@@ -275,7 +275,7 @@ python python/analysis.py
 | Item | Value |
 |:--|:--|
 | Repository |(https://github.com/Roshanmarathe/data-analysis-set-a-Customer--10258-) ]
-| Video (5–10 min) | `<PASTE VIDEO URL>` · Duration: `<MM:SS>` |
+| Video (5–10 min) | https://drive.google.com/file/d/1NujxN5tamvFvj6tBT8aYMGVTMz2a5DhE/view?usp=sharing · Duration: `11 min` |
 
 
 No external datasets or references were used.
