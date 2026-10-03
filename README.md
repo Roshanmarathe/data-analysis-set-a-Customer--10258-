@@ -7,13 +7,14 @@
 <br/>
 
 ![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![Records](https://img.shields.io/badge/Clean%20Records-12-3b82f6?style=for-the-badge)
+![SLA](https://img.shields.io/badge/SLA%20Breach-%3E%2024%20hrs-ef4444?style=for-the-badge)
 
-**Practical Exam — Data Analysis · Set A**
+**Data Analysis Practical Exam — Set A**
 
 </div>
 
@@ -25,44 +26,45 @@ This project analyzes **12 unique customer-support tickets** to answer one busin
 
 > **Which support team should improve resolution performance, and how does service quality vary by channel?**
 
-| Metric | Result |
-|:--|:--|
-| 🎯 Highest SLA-breach teams | **BillingHelp** and **AppSupport** — tied at **66.67%** (2 of 3 tickets each) |
-| 📞 Channel with most breaches | **Chat** — 3 breached tickets (Phone: 2, Email: 0) |
-| ⏱️ Slowest department | **Technical** — 28.33 hrs average vs. 19.33 hrs for Service |
-| ✅ Cross-tool reconciliation | Excel, SQL, Python and Power BI all return **28.33 hrs** for Technical |
+The same cleaned data flows through Excel, SQL, Python and Power BI, and the key result is reconciled across all four tools.
+
+| | Finding | Result |
+|:-:|:--|:--|
+| 🎯 | Highest SLA-breach teams | **BillingHelp** and **AppSupport** — **66.67%** each (2 of 3 tickets) |
+| 📞 | Channel with most breaches | **Chat** — 3 breaches (Phone 2, Email 0) |
+| ⏱️ | Slowest department | **Technical** — 28.33 hrs vs. 19.33 hrs for Service |
+| ✅ | Cross-tool check | Technical average = **28.33 hrs** in all four tools |
+
+> **SLA rule:** a ticket breaches the SLA only when `resolution_hours > 24`. Exactly 24 hours is compliant.
 
 ---
 
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Analysis%20Workflow&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Analysis Workflow"/>
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Data%20%26%20Preparation&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Data and Preparation"/>
 
 ```mermaid
 flowchart LR
-    A[("tickets.csv<br/>13 rows")] --> C{{"Remove exact<br/>duplicate"}}
-    B[("teams.csv<br/>4 rows")] --> D
-    C --> D["Join on team_id<br/>12 clean rows"]
-    D --> E["breach_flag<br/>hours > 24"]
-    E --> F["Excel<br/>PivotTable"]
-    E --> G["SQL<br/>S2a · S2b · S2c"]
-    E --> H["Python<br/>pandas + matplotlib"]
-    E --> I["Power BI<br/>DAX dashboard"]
-    F --> J(["Reconciled<br/>findings"])
-    G --> J
-    H --> J
-    I --> J
-    style J fill:#2F81F7,color:#fff,stroke:#2F81F7
+    A[("tickets.csv<br/>13 rows")] --> B{{"Remove exact<br/>duplicate"}}
+    T[("teams.csv<br/>4 rows")] --> C["Join on team_id"]
+    B --> C
+    C --> D["12 clean tickets<br/>+ breach_flag"]
+    D --> E[Excel]
+    D --> F[SQL]
+    D --> G[Python]
+    D --> H[Power BI]
+    E --> I(["Reconciled<br/>result"])
+    F --> I
+    G --> I
+    H --> I
+    style I fill:#2F81F7,color:#fff,stroke:#2F81F7
 ```
 
----
-
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Data%20%26%20Method&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Data and Method"/>
-
-### Dataset
-
-| File | Role | Rows |
-|:--|:--|:-:|
-| `data/raw/tickets.csv` | Fact table — support tickets | 13 (1 exact duplicate) → **12 clean** |
-| `data/raw/teams.csv` | Lookup table — teams and departments | 4 |
+| Check | Result |
+|:--|:-:|
+| Source ticket rows | 13 |
+| Exact duplicate removed (`12,Mar,T4,Phone,24,5`) | 1 |
+| **Clean ticket rows** | **12** |
+| Unmatched team IDs after join | **0** |
+| Missing departments after join | **0** |
 
 | Team ID | Team | Department |
 |:-:|:--|:--|
@@ -71,24 +73,18 @@ flowchart LR
 | T3 | AppSupport | Technical |
 | T4 | DeviceHelp | Technical |
 
-### Cleaning Rules
-
-- The exact duplicate `12,Mar,T4,Phone,24,5` is kept **once**.
-- `team_id` is the join key between tickets and teams.
-- Numeric fields stay numeric; months are ordered **Jan → Feb → Mar**.
-
-### Metric Definitions
-
-```text
-breach_flag     = 1 if resolution_hours > 24, else 0     (exactly 24 hrs meets the SLA)
-SLA Breach Rate = tickets with resolution_hours > 24 ÷ total tickets
-```
-
 ---
 
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Key%20Findings&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Key Findings"/>
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Results%20at%20a%20Glance&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Results at a Glance"/>
 
-### 1 · SLA Breach Rate by Team
+```mermaid
+xychart-beta
+    title "Average Resolution Time by Department (hours) — SLA line at 24"
+    x-axis [Service, Technical]
+    y-axis "Hours" 0 --> 32
+    bar [19.33, 28.33]
+    line [24, 24]
+```
 
 ```mermaid
 xychart-beta
@@ -98,6 +94,142 @@ xychart-beta
     bar [0, 66.67, 66.67, 33.33]
 ```
 
+```mermaid
+xychart-beta
+    title "SLA-Breached Tickets by Channel"
+    x-axis [Email, Chat, Phone]
+    y-axis "Breached tickets" 0 --> 4
+    bar [0, 3, 2]
+```
+
+---
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=33,22,28&section=header&text=1%20%C2%B7%20Excel%20Analysis&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Excel Analysis"/>
+
+**File:** `excel/analysis.xlsx`
+
+| Sheet | Purpose |
+|:--|:--|
+| `Raw` | Original 13-row ticket extract, unchanged |
+| `Lookup` | 4-row team and department reference |
+| `Clean` | 12 deduplicated rows with department and `breach_flag` |
+| `Summary` | Channel breach counts, department × month PivotTable, chart |
+
+**Key formulas**
+
+```excel
+=XLOOKUP([@team_id], Lookup[team_id], Lookup[department], "Not found")
+=IF([@resolution_hours]>24, 1, 0)
+=COUNTIFS(Clean[channel], A2, Clean[breach_flag], 1)
+```
+
+**Channel breaches**
+
+| Channel | Breached Tickets |
+|:--|:-:|
+| Email | 0 |
+| Chat | **3** |
+| Phone | **2** |
+
+**PivotTable — average resolution hours**
+
+| Department | Jan | Feb | Mar | Overall |
+|:--|:-:|:-:|:-:|:-:|
+| Service | 20.00 | 19.00 | 19.00 | 19.33 |
+| Technical | 28.00 | 29.00 | 28.00 | **28.33** |
+| **Overall** | 24.00 | 24.00 | 23.50 | 23.83 |
+
+> 💡 Technical stays above 24 hours in every month, which points to a department-specific issue rather than a time trend.
+
+---
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=6,3,12&section=header&text=2%20%C2%B7%20SQL%20Analysis&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="SQL Analysis"/>
+
+**Files:** `sql/setup.sql` → `sql/queries.sql` (run in this order)
+
+**S2a — Average resolution time by department**
+
+```sql
+SELECT tm.department,
+       ROUND(AVG(t.resolution_hours), 2) AS avg_resolution_hours
+FROM tickets AS t
+JOIN teams   AS tm ON t.team_id = tm.team_id
+GROUP BY tm.department
+ORDER BY avg_resolution_hours DESC;
+```
+
+| Department | Avg Resolution Hours |
+|:--|:-:|
+| Technical | **28.33** |
+| Service | **19.33** |
+
+**S2b — Teams averaging more than 24 hours**
+
+```sql
+SELECT tm.team,
+       ROUND(AVG(t.resolution_hours), 2) AS avg_resolution_hours
+FROM tickets AS t
+JOIN teams   AS tm ON t.team_id = tm.team_id
+GROUP BY tm.team
+HAVING AVG(t.resolution_hours) > 24
+ORDER BY avg_resolution_hours DESC;
+```
+
+| Team | Avg Resolution Hours |
+|:--|:-:|
+| AppSupport | 28.67 |
+| DeviceHelp | 28.00 |
+| BillingHelp | 26.67 |
+
+**S2c — Top two channels by breach count** *(alphabetical tie-break)*
+
+```sql
+SELECT channel, COUNT(*) AS breach_count
+FROM tickets
+WHERE resolution_hours > 24
+GROUP BY channel
+ORDER BY breach_count DESC, channel
+LIMIT 2;
+```
+
+| Channel | Breach Count |
+|:--|:-:|
+| Chat | **3** |
+| Phone | **2** |
+
+**S3 — Data integrity check:** the check for unmatched team IDs returned an **empty result** — every ticket maps to a valid team.
+
+---
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=2,1,12&section=header&text=3%20%C2%B7%20Python%20Analysis&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Python Analysis"/>
+
+**File:** `python/analysis.py` — built with `pandas` and `matplotlib`, using repository-relative paths.
+
+```python
+from pathlib import Path
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parents[1]
+tickets = pd.read_csv(ROOT / "data" / "raw" / "tickets.csv").drop_duplicates()
+teams   = pd.read_csv(ROOT / "data" / "raw" / "teams.csv")
+
+df = tickets.merge(teams, on="team_id", how="left", validate="many_to_one")
+
+assert len(df) == 12, "Clean dataset must contain 12 rows"
+assert df["department"].notna().all(), "Every ticket must map to a department"
+
+df["breach_flag"] = (df["resolution_hours"] > 24).astype(int)
+```
+
+**Department summary**
+
+| Department | Tickets | Breached | Breach Rate |
+|:--|:-:|:-:|:-:|
+| Service | 6 | 2 | 33.33% |
+| Technical | 6 | 3 | 50.00% |
+
+**Team summary**
+
 | Team | Breached | Total | Breach Rate |
 |:--|:-:|:-:|:-:|
 | AccountCare | 0 | 3 | 0.00% |
@@ -105,120 +237,42 @@ xychart-beta
 | **AppSupport** | **2** | 3 | **66.67%** |
 | DeviceHelp | 1 | 3 | 33.33% |
 
-### 2 · Breached Tickets by Channel
+**Monthly average resolution time**
 
-```mermaid
-xychart-beta
-    title "SLA-Breached Tickets by Channel"
-    x-axis ["Email", "Chat", "Phone"]
-    y-axis "Breached tickets" 0 --> 4
-    bar [0, 3, 2]
-```
+<div align="center">
 
-### 3 · Department Performance
+<img src="outputs/python_chart.png" width="75%" alt="Python chart — monthly average resolution time"/>
 
-| Department | Tickets | Breached | Breach Rate | Avg Resolution (hrs) |
-|:--|:-:|:-:|:-:|:-:|
-| Service | 6 | 2 | 33.33% | 19.33 |
-| Technical | 6 | 3 | 50.00% | **28.33** |
+</div>
 
-### 4 · Average Resolution Time by Month
-
-```mermaid
-xychart-beta
-    title "Average Resolution Time (hours)"
-    x-axis [Jan, Feb, Mar]
-    y-axis "Hours" 20 --> 28
-    line [24.00, 24.00, 23.50]
-```
-
-### 5 · Department × Month (Excel PivotTable)
-
-| Department | Jan | Feb | Mar | Overall |
-|:--|:-:|:-:|:-:|:-:|
-| Service | 20.00 | 19.00 | 19.00 | 19.33 |
-| Technical | 28.00 | 29.00 | 28.00 | 28.33 |
-| **Overall** | 24.00 | 24.00 | 23.50 | 23.83 |
-
-### 6 · Teams With Average Resolution Above 24 Hours (SQL S2b)
-
-| Team | Avg Resolution (hrs) |
-|:--|:-:|
-| AppSupport | 28.67 |
-| DeviceHelp | 28.00 |
-| BillingHelp | 26.67 |
-
-> 💡 **Insight:** DeviceHelp's average exceeds 24 hrs, yet only 1 of its 3 tickets breached the SLA. Average time and breach rate measure different things, so the breach rate is used as the primary prioritization metric.
+| Jan | Feb | Mar |
+|:-:|:-:|:-:|
+| 24.00 hrs | 24.00 hrs | 23.50 hrs |
 
 ---
 
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Recommendation&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Recommendation"/>
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=14,8,24&section=header&text=4%20%C2%B7%20Power%20BI%20Dashboard&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Power BI Dashboard"/>
 
-1. **Prioritize BillingHelp and AppSupport** for a resolution-performance review — each has the highest observed breach rate (66.67%).
-2. **Include Chat cases in the review** — Chat accounts for the most SLA-breached tickets (3).
+**File:** `powerbi/dashboard.pbix`
 
-**Limitation:** the dataset is a small synthetic sample of 12 tickets. Findings describe this practical's data and should not be generalized to a production support operation without more data.
+<div align="center">
 
----
+<!-- Save your dashboard screenshot as outputs/powerbi_dashboard.png -->
+<img src="outputs/powerbi_dashboard.png" width="100%" alt="Power BI dashboard screenshot"/>
 
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Cross-Tool%20Reconciliation&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Cross-Tool Reconciliation"/>
+<sub>Interactive dashboard — the channel slicer filters every KPI card and chart.</sub>
 
-**Aggregate checked:** average resolution time for the **Technical** department (underlying value ≈ 28.3333 hrs, reported to two decimals).
+</div>
 
-| Tool | Method | Result |
-|:--|:--|:-:|
-| Excel | PivotTable | ✅ 28.33 hrs |
-| SQL | Query S2a | ✅ 28.33 hrs |
-| Python | pandas on clean data | ✅ 28.33 hrs |
-| Power BI | Technical filter | ✅ 28.33 hrs |
+**Data model:** active one-to-many relationship `teams[team_id] → tickets[team_id]`, single-direction filtering.
 
-**Data integrity:** the SQL diagnostic returned an empty result set — zero unmatched `team_id` values between tickets and teams.
-
----
-
-<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Tool%20Deliverables&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Tool Deliverables"/>
-
-<details>
-<summary><b>📗 Excel</b> — <code>excel/analysis.xlsx</code></summary>
-<br/>
-
-Sheets: **Raw** (13 rows) · **Lookup** (4 rows) · **Clean** (12 rows with department and `breach_flag`) · **Summary** (channel counts, PivotTable, chart).
-Formulas and the PivotTable remain fully editable.
-
-</details>
-
-<details>
-<summary><b>🗄️ SQL</b> — <code>sql/setup.sql</code> · <code>sql/queries.sql</code></summary>
-<br/>
-
-Run `setup.sql` first, then `queries.sql`.
-
-| Query | Purpose |
-|:--|:--|
-| **S2a** | Average resolution time by department |
-| **S2b** | Teams whose average resolution exceeds 24 hrs |
-| **S2c** | Top two channels by breach count (alphabetical tie-break) |
-| **S3** | Data-integrity check for unmatched team IDs |
-
-</details>
-
-<details>
-<summary><b>🐍 Python</b> — <code>python/analysis.py</code></summary>
-<br/>
-
-Loads both CSVs with repository-relative paths, removes the duplicate, merges on `team_id`, asserts 12 rows and no missing departments, builds `breach_flag`, summarizes breach rates, and exports the chart and CSV outputs.
-
-</details>
-
-<details>
-<summary><b>📊 Power BI</b> — <code>powerbi/dashboard.pbix</code></summary>
-<br/>
-
-**Model:** one-to-many `teams[team_id] → tickets[team_id]`, single-direction filtering.
+**DAX measures**
 
 ```dax
 Ticket Count     = COUNTROWS(tickets)
+
 Avg Satisfaction = AVERAGE(tickets[satisfaction])
+
 SLA Breach Rate  =
 DIVIDE(
     COUNTROWS( FILTER( tickets, tickets[resolution_hours] > 24 ) ),
@@ -227,17 +281,52 @@ DIVIDE(
 )
 ```
 
-**Report page:** three KPI cards, department comparison, monthly trend, and a channel slicer that filters every visual.
-If the source path is reported missing, point the CSV sources to the local `data/raw/` folder and refresh.
+**Report page**
 
-</details>
+| Visual | Purpose |
+|:--|:--|
+| KPI card — Ticket Count | Clean tickets in scope |
+| KPI card — Avg Satisfaction | Average customer score (1–5) |
+| KPI card — SLA Breach Rate | Share of tickets over 24 hrs |
+| Department comparison | Resolution time by department |
+| Monthly trend | Resolution time Jan → Mar |
+| Channel slicer | Filters all cards and charts |
+
+---
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Cross-Tool%20Reconciliation&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Cross-Tool Reconciliation"/>
+
+**Aggregate checked:** average resolution time for the **Technical** department.
+
+| Tool | Method | Result |
+|:--|:--|:-:|
+| Excel | PivotTable | ✅ 28.33 hrs |
+| SQL | Query S2a | ✅ 28.33 hrs |
+| Python | `groupby("department")` mean | ✅ 28.33 hrs |
+| Power BI | Technical filter | ✅ 28.33 hrs |
+
+The underlying value is ≈ 28.3333 hrs; any difference is display rounding only.
+
+---
+
+<img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Recommendation%20%26%20Limitation&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Recommendation and Limitation"/>
+
+### Recommendation
+
+1. **Review BillingHelp and AppSupport first** — both have the highest observed breach rate (66.67%).
+2. **Include Chat cases in the review** — Chat produces 3 of the 5 observed breaches.
+3. **Focus on Technical** — its average resolution time is 9.00 hrs higher than Service, and it breaches the SLA on half of its tickets.
+
+### Limitation
+
+The dataset is synthetic and contains only 12 clean records. Each team has just 3 tickets, so a single extra ticket would shift its rate sharply. Treat these findings as a signal to investigate, not a verdict on a real support operation.
 
 ---
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Repository%20%26%20Setup&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Repository and Setup"/>
 
 ```text
-data-analysis-set-b-<student-id>/
+data-analysis-set-e-<student-id>/
 ├── README.md
 ├── requirements.txt
 ├── data/raw/
@@ -261,23 +350,22 @@ data-analysis-set-b-<student-id>/
         └── s3_data_integrity_check.csv
 ```
 
-**Run the Python analysis** from the repository root:
+**Run the analysis**
 
 ```bash
 pip install -r requirements.txt
 python python/analysis.py
 ```
 
+**SQL:** run `sql/setup.sql`, then `sql/queries.sql`.
+**Power BI:** open `powerbi/dashboard.pbix`; if a source path is missing, point the CSV sources to `data/raw/` and refresh.
+
 ---
 
 <img src="https://capsule-render.vercel.app/api?type=rect&height=45&color=gradient&customColorList=12,14,18&section=header&text=Submission%20Details&fontSize=22&fontColor=ffffff&animation=fadeIn" width="100%" alt="Submission Details"/>
 
-| Item | Value |
-|:--|:--|
-| Repository |(https://github.com/Roshanmarathe/data-analysis-set-a-Customer--10258-) ]
+## Video Projection
 | Video (5–10 min) | https://drive.google.com/file/d/1NujxN5tamvFvj6tBT8aYMGVTMz2a5DhE/view?usp=sharing · Duration: `11 min` |
-
-
 No external datasets or references were used.
 
 ---
@@ -286,7 +374,7 @@ No external datasets or references were used.
 
 <img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=gradient&customColorList=12,14,18,24&section=footer&text=Roshan%20Marathe&fontSize=34&fontColor=ffffff&animation=twinkling&fontAlignY=62&desc=Author%20%E2%80%A2%20Data%20Analysis%20Set%20A&descAlignY=82&descSize=15" width="100%" alt="Author: Roshan Marathe"/>
 
-**Author:** Roshan Marathe  
+**Author:** Roshan Marathe · AI/ML Student
 **Student ID:** `10258` · **Assigned Set:** A
 
 *All work in this repository is my own except where cited.*
