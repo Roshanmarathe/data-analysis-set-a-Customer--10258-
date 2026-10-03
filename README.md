@@ -237,7 +237,7 @@ df["breach_flag"] = (df["resolution_hours"] > 24).astype(int)
 | **AppSupport** | **2** | 3 | **66.67%** |
 | DeviceHelp | 1 | 3 | 33.33% |
 
-**Monthly average resolution time**<img width="1321" height="744" alt="Screenshot 2026-10-03 212606" src="https://github.com/user-attachments/assets/c25c8030-c3c3-4a65-96fb-0d2fbc20d433" />
+**Monthly average resolution time**
 
 
 | Jan | Feb | Mar |
