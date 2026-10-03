@@ -274,12 +274,9 @@ python python/analysis.py
 
 | Item | Value |
 |:--|:--|
-| Repository | `<PASTE GITHUB REPOSITORY URL>` |
+| Repository |(https://github.com/Roshanmarathe/data-analysis-set-a-Customer--10258-) ]
 | Video (5–10 min) | `<PASTE VIDEO URL>` · Duration: `<MM:SS>` |
-| Final commit hash | `<PASTE COMMIT HASH>` |
-| Excel · Power BI | `<VERSION>` · `<VERSION>` |
-| SQL engine | `<ENGINE AND VERSION>` |
-| Python · pandas · matplotlib | `<VERSION>` · `<VERSION>` · `<VERSION>` |
+
 
 No external datasets or references were used.
 
