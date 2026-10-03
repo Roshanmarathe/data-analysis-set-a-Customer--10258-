@@ -13,7 +13,7 @@
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge)
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 
-**Practical Exam — Data Analysis · Set B**
+**Practical Exam — Data Analysis · Set A**
 
 </div>
 
@@ -240,7 +240,6 @@ If the source path is reported missing, point the CSV sources to the local `data
 data-analysis-set-b-<student-id>/
 ├── README.md
 ├── requirements.txt
-├── .gitignore
 ├── data/raw/
 │   ├── tickets.csv
 │   └── teams.csv
