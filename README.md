@@ -284,7 +284,7 @@ No external datasets or references were used.
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=gradient&customColorList=12,14,18,24&section=footer&text=Roshan%20Marathe&fontSize=34&fontColor=ffffff&animation=twinkling&fontAlignY=62&desc=Author%20%E2%80%A2%20Data%20Analysis%20Set%20B&descAlignY=82&descSize=15" width="100%" alt="Author: Roshan Marathe"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=gradient&customColorList=12,14,18,24&section=footer&text=Roshan%20Marathe&fontSize=34&fontColor=ffffff&animation=twinkling&fontAlignY=62&desc=Author%20%E2%80%A2%20Data%20Analysis%20Set%20A&descAlignY=82&descSize=15" width="100%" alt="Author: Roshan Marathe"/>
 
 **Author:** Roshan Marathe  
 **Student ID:** `10258` · **Assigned Set:** A
